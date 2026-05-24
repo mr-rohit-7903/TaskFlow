@@ -13,15 +13,36 @@ connectDB();
 const app = express();
 
 // Middleware
-let clientOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
-if (clientOrigin && clientOrigin.includes('://')) {
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://task-flow-neon-two-60.vercel.app',
+];
+
+// Add CLIENT_URL from env if set
+if (process.env.CLIENT_URL) {
   try {
-    clientOrigin = new URL(clientOrigin).origin;
+    const origin = new URL(process.env.CLIENT_URL).origin;
+    if (!allowedOrigins.includes(origin)) allowedOrigins.push(origin);
   } catch (e) {
-    // Fallback to original string if URL parsing fails
+    if (!allowedOrigins.includes(process.env.CLIENT_URL)) {
+      allowedOrigins.push(process.env.CLIENT_URL);
+    }
   }
 }
-app.use(cors({ origin: clientOrigin, credentials: true }));
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    // Allow any vercel.app preview deployment
+    if (origin.endsWith('.vercel.app') || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+}));
 app.use(express.json());
 app.use(morgan('dev'));
 
@@ -40,3 +61,6 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 TaskFlow server running on port ${PORT}`));
+
+// Export for Vercel serverless
+module.exports = app;
