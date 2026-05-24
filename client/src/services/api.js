@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://task-flow-gzj1-hf9mt39k2-rohit-bejs-projects.vercel.app/api' : '/api'),
+  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://task-flow-gzj1.vercel.app/api' : '/api'),
   headers: { 'Content-Type': 'application/json' },
 });
 
