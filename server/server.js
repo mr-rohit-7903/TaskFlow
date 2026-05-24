@@ -13,7 +13,15 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }));
+let clientOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
+if (clientOrigin && clientOrigin.includes('://')) {
+  try {
+    clientOrigin = new URL(clientOrigin).origin;
+  } catch (e) {
+    // Fallback to original string if URL parsing fails
+  }
+}
+app.use(cors({ origin: clientOrigin, credentials: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 
