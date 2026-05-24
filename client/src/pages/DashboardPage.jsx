@@ -72,7 +72,7 @@ export default function DashboardPage() {
       <section className="flex flex-col sm:flex-row sm:items-end justify-between gap-md">
         <div>
           <h2 className="text-2xl md:text-3xl font-black text-on-background tracking-tight">
-            {greeting()}, {user?.name?.split(' ')[0]} 👋
+            {greeting()}, {user?.name?.split(' ')[0]}
           </h2>
           <p className="text-base text-on-surface-variant mt-1">Here's what's happening in TaskFlow today.</p>
         </div>

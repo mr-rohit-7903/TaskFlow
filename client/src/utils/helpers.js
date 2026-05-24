@@ -16,9 +16,9 @@ export const formatDate = (date) => {
 export const isOverdue = (date) => date && isPast(new Date(date)) && !isToday(new Date(date));
 
 export const PRIORITY_CONFIG = {
-  high: { label: 'High', color: 'text-red-700 bg-red-50 border-red-200', dot: 'bg-red-500', icon: '🔴' },
-  medium: { label: 'Medium', color: 'text-amber-700 bg-amber-50 border-amber-200', dot: 'bg-amber-500', icon: '🟡' },
-  low: { label: 'Low', color: 'text-emerald-700 bg-emerald-50 border-emerald-200', dot: 'bg-emerald-500', icon: '🟢' },
+  high: { label: 'High', color: 'text-red-700 bg-red-50 border-red-200', dot: 'bg-red-500' },
+  medium: { label: 'Medium', color: 'text-amber-700 bg-amber-50 border-amber-200', dot: 'bg-amber-500' },
+  low: { label: 'Low', color: 'text-emerald-700 bg-emerald-50 border-emerald-200', dot: 'bg-emerald-500' },
 };
 
 export const STATUS_CONFIG = {
